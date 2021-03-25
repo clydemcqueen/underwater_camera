@@ -3,4 +3,4 @@ render_parts = true;
 render_flanges = true;
 render_electronics = true;
 render_tube = false;
-render_screws = false;
+render_screws = true;
