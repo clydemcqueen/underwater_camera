@@ -32,7 +32,6 @@ stereo_mount_narrow_width = baseline - 2 * clamp_int_r;
 stereo_mount_wide_width = stereo_mount_narrow_width + 2 * (tube_r_outside -
   sqrt(tube_r_outside * tube_r_outside - joiner_size.y * joiner_size.y / 4));
 
-// Tighten the clamp on the aluminnum bit of the flange
 clamp_screw_r = 2 / 2;
 clamp_nut_r = nut_radius(M2_nut) - 0.1;
 
