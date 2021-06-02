@@ -4,8 +4,6 @@ include <../include/tube.scad>
 flange_h = 21.5;
 flange_w = 6;
 
-// TODO camera flange hole orientation is arbitrary, 0, 90, 180, 270 would be more useful
-
 // Flange exterior portion
 flange_ext_h = 6;
 flange_ext_r = 25;
@@ -18,10 +16,6 @@ flange_int_h = flange_h - flange_ext_h;
 flange_int_r = flange_ext_r - flange_w;
 flange_int_hole_offset = 21.5;
 flange_int_holes = [for (angle = [30, 120, 210, 300])
-  [cos(angle) * flange_int_hole_offset, sin(angle) * flange_int_hole_offset]];
-
-// The pen and cam brackets are flipped upside down, so provide a set of holes that match
-flange_int_holes_flipped = [for (angle = [60, 150, 240, 330])
   [cos(angle) * flange_int_hole_offset, sin(angle) * flange_int_hole_offset]];
 
 // 2" tube dimensions
