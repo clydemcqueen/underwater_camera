@@ -26,44 +26,18 @@ module cam_bracket_ring_2d() {
 }
 
 module cam_bracket_ring() {
-  difference() {
-    linear_extrude(height = bracket_ring_h, convexity = 5)
-      cam_bracket_ring_2d();
-
-    for (connect_hole = connect_holes) {
-      // Holes to attach to cam bracket
-      translate([connect_hole.x, connect_hole.y, - 3])
-        cylinder(r = M2_hole_r, h = 10);
-
-      // Insets for M2 nuts
-      translate([connect_hole.x, connect_hole.y, bracket_ring_h / 2])
-        cylinder(r = M2_head_r, h = 10);
-    }
-  }
+  linear_extrude(height = bracket_ring_h, convexity = 5)
+    cam_bracket_ring_2d();
 }
 
 module cam_box_2d() {
   clip_circle(interior_r, - 12.675, 4);
 }
 
-// Create a hole for a screw and nut, uses data from NopSCADlib
-// Screw hole and nut hole meet at [0, 0, 0] and run along the z axis
-module nut_hole(type, length = 10) {
-  screw_rad = M2_hole_r;
-  nut_rad = nut_radius(type); // Radius of nut
-
-  linear_extrude(length)
-    circle(nut_rad, $fn = 6);
-
-  translate([0, 0, - length])
-    linear_extrude(length + 0.1)
-      circle(screw_rad);
-}
-
 // Cam "box" sits inside the flange and supports the camera
 module cam_box() {
-  box_h = 13.7 + 0.8 - 6;
-  standoff_h = 3;
+  box_h = 8.8;
+  standoff_h = 2.7;
   standoff_wall = 1.3;
 
   // Bottom part

@@ -1,15 +1,21 @@
-// External camera: penetration flange, bracket, pi, powerboost, battery
+// External camera: interior structure, pi, powerboost, battery
 
 include <flags.scad>
 
-include <../part/pen_bracket.scad>
+include <../part/struct_bracket.scad>
 
-module pen_assembly() {
+module interior_assembly() {
+    if (render_parts)
+    color("#9898f8", 0.6)
+      translate(struct_bracket1_placement)
+        rotate(struct_bracket1_rotation)
+          struct_bracket1();
+
   if (render_parts)
     color("#9898f8", 0.6)
-      translate(pen_bracket_placement)
-        rotate(pen_bracket_rotation)
-          pen_bracket();
+      translate(struct_bracket2_placement)
+        rotate(struct_bracket2_rotation)
+          struct_bracket2();
 
   if (render_electronics)
     translate(battery_placement)
@@ -25,12 +31,6 @@ module pen_assembly() {
     translate(pb_placement)
       rotate(pb_rotation)
         power_boost();
-
-  if (render_flanges)
-    color("#5252b4", 0.5)
-      translate(pen_flange_placement)
-        rotate(pen_flange_rotation)
-          pen_flange();
 }
 
 //$fn = 60;

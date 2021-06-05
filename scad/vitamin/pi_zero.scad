@@ -68,6 +68,7 @@ module pi_zero_body() {
   }
 
   // Components
+  // TODO add SD card, sticks out 2.5mm
   pcb_component(cpu, - 7.1, - 2);
   pcb_component(sd_card_holder, - 24.5, 1.9, yaw = 90);
   pcb_component(hdmi, - 20.1, - 11.4, yaw = 90);  // TODO check height!
