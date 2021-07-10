@@ -1,6 +1,6 @@
 include <ec_common.scad>
 
-include <supports.scad>
+include <ec_supports.scad>
 
 include <../include/clip_circle.scad>
 include <../include/pie_slice.scad>
@@ -11,7 +11,7 @@ include <../vitamin/pi_zero.scad>
 battery_well_inside_r = battery_r + 0.1;
 battery_well_outside_r = battery_well_inside_r + 1;
 
-module struct_bracket1_ring_2d() {
+module ec_bracket1_ring_2d() {
   difference() {
     circle(r = bracket_r);
     circle(r = interior_r);
@@ -30,7 +30,7 @@ module struct_bracket1_ring_2d() {
         clip_circle(battery_well_outside_r, battery_well_clip, - battery_well_clip);
 }
 
-module struct_bracket2_ring_2d() {
+module ec_bracket2_ring_2d() {
   difference() {
     circle(r = bracket_r);
     circle(r = interior_r);
@@ -47,10 +47,10 @@ module struct_bracket2_ring_2d() {
       clip_circle(bracket_r, 0, - 35);
 }
 
-module struct_bracket1_ring() {
+module ec_bracket1_ring() {
   difference() {
     linear_extrude(height = bracket_ring_h, convexity = 5)
-      struct_bracket1_ring_2d();
+      ec_bracket1_ring_2d();
 
     for (connect_hole = connect_holes) {
       // Holes to attach to cam bracket
@@ -64,10 +64,10 @@ module struct_bracket1_ring() {
   }
 }
 
-module struct_bracket2_ring() {
+module ec_bracket2_ring() {
   difference() {
     linear_extrude(height = bracket_ring_h, convexity = 5)
-      struct_bracket2_ring_2d();
+      ec_bracket2_ring_2d();
 
     rotate([0, 0, 180 - pb_angle]) {
       translate([13.7, 0, bracket_ring_h / 2]) {
@@ -99,14 +99,14 @@ module battery_well() {
   }
 }
 
-module struct_bracket1() {
-  struct_bracket1_ring();
+module ec_bracket1() {
+  ec_bracket1_ring();
   rotate([0, 0, 180])
     battery_well();
 }
 
-module struct_bracket2() {
-  struct_bracket2_ring();
+module ec_bracket2() {
+  ec_bracket2_ring();
   battery_well();
 
   translate([0, 0, flange_h + support_h + bracket_ring_h * 3])

@@ -2,20 +2,20 @@
 
 include <flags.scad>
 
-include <../part/struct_bracket.scad>
+include <../part/ec_bracket.scad>
 
 module interior_assembly() {
     if (render_parts)
     color("#9898f8", 0.6)
-      translate(struct_bracket1_placement)
-        rotate(struct_bracket1_rotation)
-          struct_bracket1();
+      translate(ec_bracket1_placement)
+        rotate(ec_bracket1_rotation)
+          ec_bracket1();
 
   if (render_parts)
     color("#9898f8", 0.6)
-      translate(struct_bracket2_placement)
-        rotate(struct_bracket2_rotation)
-          struct_bracket2();
+      translate(ec_bracket2_placement)
+        rotate(ec_bracket2_rotation)
+          ec_bracket2();
 
   if (render_electronics)
     translate(battery_placement)

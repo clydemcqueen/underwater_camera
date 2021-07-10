@@ -1,4 +1,5 @@
-// External camera common settings
+// Wired camera common settings
+// TODO remove settings that aren't used (stuff used by ec_cam_side.scad)
 
 include <../vitamin/adafruit.scad>
 include <../vitamin/blue_robotics.scad>
@@ -37,8 +38,8 @@ cam_bracket_placement = [0, 0, flange_h + bracket_ring_h];
 cam_bracket_rotation = [180, 0, 0];
 
 // First structure bracket is built right-side up
-ec_bracket1_placement = [0, 0, flange_h + bracket_ring_h];
-ec_bracket1_rotation = [0, 0, 0];
+wc_bracket1_placement = [0, 0, flange_h + bracket_ring_h];
+wc_bracket1_rotation = [0, 0, 0];
 
 // There are 3 long supports between the 2 structure brackets
 support_r = 3.2 - bracket_r;
@@ -63,8 +64,8 @@ support3_placement = [support_r * cos(support3_angle), - support_r * sin(support
 support3_rotation = [support3_angle, 90, 0];
 
 // Second structure bracket is also built upside down
-ec_bracket2_placement = [0, 0, flange_h + support_h + 3 * bracket_ring_h];
-ec_bracket2_rotation = [180, 0, 0];
+wc_bracket2_placement = [0, 0, flange_h + support_h + 3 * bracket_ring_h];
+wc_bracket2_rotation = [180, 0, 0];
 
 // Penetration flange placement and rotation
 pen_flange_placement = [0, 0, 132];
