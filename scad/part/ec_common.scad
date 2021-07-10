@@ -1,40 +1,10 @@
-// External camera common settings
+// Battery-powered camera common settings
+
+include <common.scad>
 
 include <../vitamin/adafruit.scad>
 include <../vitamin/blue_robotics.scad>
 include <../vitamin/pi_camera.scad>
-include <../vitamin/pi_zero.scad>
-
-// All tolerances measured for my Prusa MK3S + PLA + 0.15mm layers
-
-// Good M2 hole radius
-M2_hole_r = 1.1;
-
-// When printed sideways it needs to be a bit smaller
-M2_hole_side_print_r = 1;
-
-// M2 head radius, for insets
-M2_head_r = 1.85;
-
-// Build a structure with 2 circular ("ring") brackets connected by long supports
-// Overall structure size:
-structure_h = 87;
-bracket_ring_h = 4;
-support_h = structure_h - 3 * bracket_ring_h;
-
-// Bracket radius, slightly smaller than the inside of the tube
-bracket_r = tube_r_inside - 0.2;
-
-// Interior radius, slightly smaller than the inside of the flange
-interior_r = flange_int_r - 0.2;
-
-// Build the stack from the camera flange upwards to the penetration flange
-cam_flange_placement = [0, 0, 0];
-cam_flange_rotation = [0, 0, 0];
-
-// Camera bracket is built upside down, so rotate into place
-cam_bracket_placement = [0, 0, flange_h + bracket_ring_h];
-cam_bracket_rotation = [180, 0, 0];
 
 // First structure bracket is built right-side up
 ec_bracket1_placement = [0, 0, flange_h + bracket_ring_h];
@@ -66,23 +36,10 @@ support3_rotation = [support3_angle, 90, 0];
 ec_bracket2_placement = [0, 0, flange_h + support_h + 3 * bracket_ring_h];
 ec_bracket2_rotation = [180, 0, 0];
 
-// Penetration flange placement and rotation
-pen_flange_placement = [0, 0, 132];
-pen_flange_rotation = [0, 180, 0];
-
-// 2" tube placement and rotation
-tube_placement = [0, 0, flange_ext_h];
-tube_rotation = [0, 0, 0];
-
 // Holes to connect the 2 structure brackets
 support_hole_r = (bracket_r + interior_r) / 2;
 connect_holes = [for (a = [support1_angle, support2_angle, support3_angle])
   [- cos(a) * support_hole_r, - sin(a) * support_hole_r]];
-
-// Cam flange can be in any orientation. Rotate so that the flange holes miss the support holes.
-cam_flange_a = 0;
-pen_flange_int_holes = [for (a = [cam_flange_a, cam_flange_a + 90, cam_flange_a + 180, cam_flange_a + 270])
-  [cos(a) * flange_int_hole_offset, sin(a) * flange_int_hole_offset]];
 
 // Place the parts into the structure, starting with the camera
 // The camera has a wide-angle lens, so it sits pretty deep in the flange

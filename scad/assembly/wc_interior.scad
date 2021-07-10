@@ -22,7 +22,11 @@ module wired_interior_assembly() {
       rotate(pi_rotation)
         pi_zero();
 
-  // TODO secondary board
+  // The proto board is the same size as the pi zero pcb
+  if (render_electronics)
+    translate(proto_placement)
+      rotate(proto_rotation)
+        pi_zero_pcb();
 }
 
 //$fn = 60;

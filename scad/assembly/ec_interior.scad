@@ -1,4 +1,4 @@
-// External camera, just the interior bits: interior printed parts, pi, powerboost, battery
+// Battery-powered camera, just the interior bits: interior printed parts, pi, powerboost, battery
 
 include <flags.scad>
 

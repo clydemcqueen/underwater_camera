@@ -1,9 +1,7 @@
-include <ec_common.scad>
+include <common.scad>
 
 include <../include/clip_circle.scad>
 include <../include/standoffs.scad>
-include <../vitamin/adafruit.scad>
-include <../vitamin/pi_camera.scad>
 
 include <NopSCADlib/core.scad>
 

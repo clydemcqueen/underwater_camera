@@ -1,4 +1,4 @@
-// External camera: full assembly
+// Battery-powered camera: full assembly
 
 include <flags.scad>
 include <ec_cam_side.scad>

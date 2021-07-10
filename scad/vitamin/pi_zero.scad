@@ -39,15 +39,15 @@ antenna_poly = [[- 6.5, - 11.4], [1.5, - 11.4], [- 1.5, - 13.5], [- 4, - 13.5], 
 function pin_pos_x(i) = - (19 * pi_header_pitch / 2) + i * pi_header_pitch;
 function pin_pos_y(j) = pi_hole_y - pi_header_pitch / 2 + j * pi_header_pitch;
 
-// Pi body and headers
+// Pi zero, with optional headers and rtc
 module pi_zero() {
-  if (show_pi) pi_zero_body();
+  if (show_pi) pi_zero_pcb_and_components();
   if (show_gpio_header) pi_headers(show_gpio_header);
   if (show_rtc) pi_rtc();
 }
 
-// Just Pi body
-module pi_zero_body() {
+// Just the pcb
+module pi_zero_pcb() {
   color("#038f3f") difference() {
     pcb(pi_x, pi_y, pi_z, pi_corner_r);
 
@@ -66,8 +66,12 @@ module pi_zero_body() {
       pcb_hole(pin_pos_x(i), pin_pos_y(j), 0.5, pi_z);
     }
   }
+}
 
-  // Components
+// Add components
+module pi_zero_pcb_and_components() {
+  pi_zero_pcb();
+
   // TODO add SD card, sticks out 2.5mm
   pcb_component(cpu, - 7.1, - 2);
   pcb_component(sd_card_holder, - 24.5, 1.9, yaw = 90);

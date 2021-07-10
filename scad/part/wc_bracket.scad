@@ -68,5 +68,9 @@ module wc_bracket2() {
       translate(support3_placement)
         rotate(support3_rotation)
           support3();
+
+      translate(support4_placement)
+        rotate(support4_rotation)
+          support4();
     }
 }
