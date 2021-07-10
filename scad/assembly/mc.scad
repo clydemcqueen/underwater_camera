@@ -1,4 +1,4 @@
-// Mono camera with mount, ready to attach to AUV
+// Mono camera mount
 
 include <flags.scad>
 

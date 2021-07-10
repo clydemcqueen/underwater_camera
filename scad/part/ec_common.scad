@@ -1,3 +1,5 @@
+// External camera common settings
+
 include <../vitamin/adafruit.scad>
 include <../vitamin/blue_robotics.scad>
 include <../vitamin/pi_camera.scad>

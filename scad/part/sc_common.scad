@@ -1,3 +1,5 @@
+// Stereo mount common settings
+
 include <../vitamin/blue_robotics.scad>
 include <NopSCADlib/core.scad>
 

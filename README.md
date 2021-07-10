@@ -1,6 +1,6 @@
 # Underwater camera
 
-> **NOTE:** this is experimental, I will certainly make changes as I conduct field tests
+> **NOTE:** pictures show build 1; build 2 uses wide-angle cameras
 
 This repo contains [OpenSCAD](http://www.openscad.org/) files for an underwater camera designed for a depth of 100m.
 2 cameras can be combined to produce a stereo camera.
@@ -20,7 +20,7 @@ Each camera consists of the following:
 * [Adafruit Lithium Ion Cylindrical Battery - 3.7v 2200mAh](https://www.adafruit.com/product/1781)
 * [Raspberry Pi camera, Raspberry Pi Zero W, Mini cable](https://www.adafruit.com/product/3414)
 
-Printed parts:
+Printed parts [build 1]:
 * Power tray: `scad/print/power_tray.scad`
 * Pi tray: `scad/print/pi_tray.scad`
 * Camera bracket: `scad/print/cam_bracket.scad`
@@ -48,8 +48,6 @@ Additional printed parts:
   * `pi_camera.scad` Pi Camera V1.2 vitamin
   * `pi_zero.scad` Pi Zero W vitamin
 * `scad/assembly` an assembly is a combination of printable and non-printable parts
-  * `ec.scad` shows how all of the parts fit together to build a single underwater camera
-  * `sc.scad` shows how to combine 2 cameras into a stereo camera
 * `scad/part` contains the actual printable parts
 * `scad/print` renders the printable parts
 

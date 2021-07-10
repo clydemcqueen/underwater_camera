@@ -1,4 +1,4 @@
-// External camera: domed flange, bracket, camera
+// External camera, just the camera-side bits: domed flange, bracket, camera
 
 include <flags.scad>
 

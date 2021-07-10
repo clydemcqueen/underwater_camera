@@ -1,4 +1,4 @@
-// External camera: interior structure, pi, powerboost, battery
+// External camera, just the interior bits: interior printed parts, pi, powerboost, battery
 
 include <flags.scad>
 
@@ -34,4 +34,4 @@ module interior_assembly() {
 }
 
 //$fn = 60;
-//pen_assembly();
+//interior_assembly();

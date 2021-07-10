@@ -1,4 +1,4 @@
-// Stereo camera: show just the bracket and 2 tubes
+// Stereo camera mount
 
 include <flags.scad>
 
