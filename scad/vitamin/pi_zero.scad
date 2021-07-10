@@ -2,8 +2,9 @@ include <pcb.scad>
 
 // Options
 show_pi = true;
-show_gpio_header = 0;  // 0 = no headers, 1 = above, -1 = below
+show_gpio_header = 1;  // 0 = no headers, 1 = above, -1 = below
 show_extra_header = false;  // 2x2 header for reset switch and RCA composite video
+show_rtc = true;
 
 // PCB
 pi_x = 65;
@@ -42,6 +43,7 @@ function pin_pos_y(j) = pi_hole_y - pi_header_pitch / 2 + j * pi_header_pitch;
 module pi_zero() {
   if (show_pi) pi_zero_body();
   if (show_gpio_header) pi_headers(show_gpio_header);
+  if (show_rtc) pi_rtc();
 }
 
 // Just Pi body
@@ -66,6 +68,7 @@ module pi_zero_body() {
   }
 
   // Components
+  // TODO add SD card, sticks out 2.5mm
   pcb_component(cpu, - 7.1, - 2);
   pcb_component(sd_card_holder, - 24.5, 1.9, yaw = 90);
   pcb_component(hdmi, - 20.1, - 11.4, yaw = 90);  // TODO check height!
@@ -93,6 +96,14 @@ module pi_headers(direction = 1) {
       pcb_header(pin_pos_x(i), pin_pos_y(j), base_z, pin_z);
     }
   }
+}
+
+// TODO improve this
+rtc_size = [21.2, 20.2, 17.3];
+module pi_rtc() {
+  color("#02A5FED0")
+    translate([(rtc_size.x - pi_x) / 2, (pi_y - rtc_size.y) / 2, rtc_size.z / 2 + pi_z])
+      cube(rtc_size, center = true);
 }
 
 // Preview:

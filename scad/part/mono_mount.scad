@@ -1,5 +1,7 @@
 include <mc_common.scad>
 
+M3_sq_nut_width = 5.5;
+
 // Create a recessed hole for a screw
 // Screw hole and recess meet at [0, 0, 0] and run along the z axis
 // Future: move to library
@@ -28,8 +30,13 @@ module half() {
 
     // Nuts to hold clamp screws
     // Use square M3 screws (hex screws can rotate)
-    translate([0, half_nut_pos_y, 0])
-      cube([2 * M3_nut_flat_r, M3_nut_depth, 50], center = true);
+    // Support square screws on 3 sides
+    knockout_h = 20;
+    stop_z = 10 + knockout_h / 2 - M3_sq_nut_width / 2;
+    for (z = [- stop_z, stop_z]) {
+      translate([0, half_nut_pos_y, z])
+        cube([2 * M3_nut_flat_r, M3_nut_depth, knockout_h], center = true);
+    }
 
     // Screw hole to mount to sub frame
     translate([3, 0, 0])

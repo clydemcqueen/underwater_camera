@@ -1,5 +1,6 @@
 include <../vitamin/adafruit.scad>
 include <../vitamin/blue_robotics.scad>
+include <../vitamin/pi_camera.scad>
 include <../vitamin/pi_zero.scad>
 
 // All tolerances measured for my Prusa MK3S + PLA + 0.15mm layers
@@ -10,13 +11,14 @@ M2_hole_r = 1.1;
 // When printed sideways it needs to be a bit smaller
 M2_hole_side_print_r = 1;
 
-// Build a structure with 2 circular ("ring") brackets connected by 2 flat trays
-// The trays have tabs that slot into the cam_bracket and the pen_bracket
+// M2 head radius, for insets
+M2_head_r = 1.85;
 
+// Build a structure with 2 circular ("ring") brackets connected by long supports
 // Overall structure size:
-structure_h = 76;
+structure_h = 87;
 bracket_ring_h = 4;
-tray_length = structure_h - 2 * bracket_ring_h;
+support_h = structure_h - 3 * bracket_ring_h;
 
 // Bracket radius, slightly smaller than the inside of the tube
 bracket_r = tube_r_inside - 0.2;
@@ -24,94 +26,82 @@ bracket_r = tube_r_inside - 0.2;
 // Interior radius, slightly smaller than the inside of the flange
 interior_r = flange_int_r - 0.2;
 
-// Tray sizes
-pi_tray_size = [tray_length, 34, 1.8];
-pb_tray_size = [tray_length, 40, 1.8];
+// Build the stack from the camera flange upwards to the penetration flange
+cam_flange_placement = [0, 0, 0];
+cam_flange_rotation = [0, 0, 0];
 
-// How the trays are positioned in the brackets
-pi_slot_position = 18;
-pb_slot_position = 8;
+// Camera bracket is built upside down, so rotate into place
+cam_bracket_placement = [0, 0, flange_h + bracket_ring_h];
+cam_bracket_rotation = [180, 0, 0];
 
-// Adjust boards to be center=true
-pi_center_offset = pi_slot_position - pi_tray_size.z / 2;
-pb_center_offset = pb_slot_position - pb_tray_size.z / 2;
+// First structure bracket is built right-side up
+struct_bracket1_placement = [0, 0, flange_h + bracket_ring_h];
+struct_bracket1_rotation = [0, 0, 0];
 
-// Slots are slightly larger than tabs
-tab_slot_tolerance = 0.15;
+// There are 3 long supports between the 2 structure brackets
+support_r = 3.2 - bracket_r;
+support1_size = [support_h, 8, 5];
+support1_angle = 180 - 28;
+support1_y_offset = - 1.5;
+support1_placement = [support_r * cos(support1_angle), - support_r * sin(support1_angle),
+      flange_h + support_h / 2 + 2 * bracket_ring_h];
+support1_rotation = [support1_angle, 90, 0];
 
-// The pi and pb boards also fit snugly into the brackets
-board_slot_tolerance = 0.2;
+support2_size = [support_h, 8, 5];
+support2_angle = 180 + 28;
+support2_y_offset = 1.5;
+support2_placement = [support_r * cos(support2_angle), - support_r * sin(support2_angle),
+      flange_h + support_h / 2 + 2 * bracket_ring_h];
+support2_rotation = [support2_angle, 90, 0];
 
-// The pb_tray is attached to the pen_bracket and the cam_bracket at 2 points with M2 screws
-attach = [4, 5, 5];
-attach_hole_r = M2_hole_r;
-attach_hole_side_print_r = M2_hole_side_print_r;
-attach_cam_pos_y = 6;
-attach_pen_pos_y = 15;
+support3_size = [support_h, 7, 5];
+support3_angle = 20;
+support3_placement = [support_r * cos(support3_angle), - support_r * sin(support3_angle),
+      flange_h + support_h / 2 + 2 * bracket_ring_h];
+support3_rotation = [support3_angle, 90, 0];
 
-// Holes in pb_tray
-attach_cam_holes = [[- 42, - attach_cam_pos_y], [- 42, attach_cam_pos_y]];
-attach_pen_holes = [[40.5, - attach_pen_pos_y], [40.5, attach_pen_pos_y]];
+// Second structure bracket is also built upside down
+struct_bracket2_placement = [0, 0, flange_h + support_h + 3 * bracket_ring_h];
+struct_bracket2_rotation = [180, 0, 0];
 
-// Nut positions in cam_bracket
-nut_pb_cam_posns = [[2, - attach_cam_pos_y], [2, attach_cam_pos_y]];
+// Penetration flange placement and rotation
+pen_flange_placement = [0, 0, 132];
+pen_flange_rotation = [0, 180, 0];
 
-// Tab widths
-pi_cam_tab_width = 14;
-pi_pen_tab_width = 28;
-pb_cam_tab_width = 25;
-pb_pen_tab_width = 35;
+// 2" tube placement and rotation
+tube_placement = [0, 0, flange_ext_h];
+tube_rotation = [0, 0, 0];
 
-// Tab sizes
-pi_cam_tab = [bracket_ring_h, pi_cam_tab_width];
-pi_pen_tab = [bracket_ring_h, pi_pen_tab_width];
-pb_cam_tab = [bracket_ring_h + 8, pb_cam_tab_width];
-pb_pen_tab = [bracket_ring_h, pb_pen_tab_width];
+// Holes to connect the 2 structure brackets
+support_hole_r = (bracket_r + interior_r) / 2;
+connect_holes = [for (a = [support1_angle, support2_angle, support3_angle])
+  [- cos(a) * support_hole_r, - sin(a) * support_hole_r]];
 
-// Slot sizes
-pi_cam_slot = [pi_tray_size.z + tab_slot_tolerance, pi_cam_tab_width + tab_slot_tolerance];
-pi_pen_slot = [pi_tray_size.z + tab_slot_tolerance, pi_pen_tab_width + tab_slot_tolerance];
-pb_cam_slot = [pb_tray_size.z + tab_slot_tolerance, pb_cam_tab_width + tab_slot_tolerance];
-pb_pen_slot = [pb_tray_size.z + tab_slot_tolerance, pb_pen_tab_width + tab_slot_tolerance];
+// Cam flange can be in any orientation. Rotate so that the flange holes miss the support holes.
+cam_flange_a = 0;
+pen_flange_int_holes = [for (a = [cam_flange_a, cam_flange_a + 90, cam_flange_a + 180, cam_flange_a + 270])
+  [cos(a) * flange_int_hole_offset, sin(a) * flange_int_hole_offset]];
 
-// Slot positions
-pi_cam_slot_pos = [pi_center_offset, 0];
-pi_pen_slot_pos = [pi_center_offset, 0];
-pb_cam_slot_pos = [pb_center_offset, 0];
-pb_pen_slot_pos = [pb_center_offset, 0];
+// Place the parts into the structure, starting with the camera
+// The camera has a wide-angle lens, so it sits pretty deep in the flange
+camera_placement = [cam_center_point.x, cam_center_point.y, cam_center_point.z + 6];
+camera_rotation = [0, 0, 0];
 
-// PCB knockout sizes
-pi_pcb_kn = [pi_z + board_slot_tolerance, 31];
-pb_pcb_kn = [pb_z + board_slot_tolerance, 25.2];  // Same width as tray tab
+// The pi is placed so that a short ribbon cable will reach the camera
+pi_adj = 8;
+pi_placement = [17, 0, flange_h + bracket_ring_h + support_h / 2 + pi_adj];
+pi_rotation = [0, 90, 180];
 
-// PCB knockout positions
-pi_pcb_cam_kn_pos = [pi_cam_slot_pos.x - pi_cam_slot.x / 2 - pi_pcb_kn.x / 2, 0];
-pi_pcb_pen_kn_pos = [pi_pen_slot_pos.x - pi_pen_slot.x / 2 - pi_pcb_kn.x / 2, 0];
-pb_pcb_pen_kn_pos = [pb_pen_slot_pos.x - pb_pen_slot.x / 2 - pb_pcb_kn.x / 2, 0];
+// Place the battery
+battery_placement = [0, 16, 32];
+battery_rotation = [0, 0, 0];
+battery_well_angle = 55;
+battery_well_clip = 1.85;
 
-// Board component knockout sizes
-pi_comp_kn = [3, 18];
-pb_comp_kn = [3, 10];
-
-// Board component knockout positions
-pi_comp_cam_kn_pos = [pi_pcb_cam_kn_pos.x - pi_pcb_kn.x / 2 - pi_comp_kn.x / 2, 0];
-pi_comp_pen_kn_pos = [pi_pcb_pen_kn_pos.x - pi_pcb_kn.x / 2 - pi_comp_kn.x / 2, 0];
-pb_comp_pen_kn_pos = [pb_pcb_pen_kn_pos.x - pb_pcb_kn.x / 2 - pb_comp_kn.x / 2, 0];
-
-// Mount the boards on the trays
-pi_mount = [5.5, 0];
-pb_mount = [20, 0];
-
-// Boards sit slightly off the tray
-mount_standoff = 0.3;
-
-// The trays have nibs to hold the boards in place
-pi_nib_h = pi_z + board_slot_tolerance / 2;
-pb_nib_h = pb_z + board_slot_tolerance / 2;
-
-// All assemblies are built with the camera facing down, where z=0 at the camera center point.
-// The 2 trays share a common z, so that appears here.
-tray_center_z = tray_length / 2 + flange_h + bracket_ring_h;
-
-// Battery position
-battery_pos = [- 9.5, 0, 9];
+// The powerboost is placed so that the micro USB is accessible when the penetration flange is removed
+// Powerboost is rotated around the center of the pen bracket ring to get out of the way of the other parts
+pb_angle = 60;
+pb_placement_r = 5.5 - bracket_r;
+pb_placement = [pb_placement_r * cos(pb_angle), pb_placement_r * sin(pb_angle),
+        flange_h + 3 * bracket_ring_h / 2 + support_h - pb_size.y / 2];
+pb_rotation = [0, - 90, 180 + pb_angle];
