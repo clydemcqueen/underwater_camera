@@ -1,7 +1,7 @@
 // Wired camera: full assembly
 
 include <flags.scad>
-include <ec_cam_side.scad>  // Still uses ec_cam_side!
+include <xc_cam_side.scad>
 include <wc_interior.scad>
 
 include <../part/wc_common.scad>

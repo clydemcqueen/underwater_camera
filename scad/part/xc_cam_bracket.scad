@@ -1,4 +1,4 @@
-include <common.scad>
+include <xc_common.scad>
 
 include <../include/clip_circle.scad>
 include <../include/standoffs.scad>

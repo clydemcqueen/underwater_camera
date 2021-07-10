@@ -1,8 +1,8 @@
-// Battery-powered camera, just the camera-side bits: domed flange, bracket, camera
+// Wired or battery-powered camera-side bits: domed flange, bracket, camera
 
 include <flags.scad>
 
-include <../part/cam_bracket.scad>
+include <../part/xc_cam_bracket.scad>
 
 module cam_assembly() {
   if (render_electronics)

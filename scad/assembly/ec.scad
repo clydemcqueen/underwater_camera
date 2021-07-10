@@ -1,7 +1,7 @@
 // Battery-powered camera: full assembly
 
 include <flags.scad>
-include <ec_cam_side.scad>
+include <xc_cam_side.scad>
 include <ec_interior.scad>
 
 include <../part/ec_common.scad>

@@ -1,6 +1,6 @@
 // Wired camera common settings
 
-include <common.scad>
+include <xc_common.scad>
 
 // First structure bracket is built right-side up
 wc_bracket1_placement = [0, 0, flange_h + bracket_ring_h];

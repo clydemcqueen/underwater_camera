@@ -1,4 +1,4 @@
-include <../part/cam_bracket.scad>
+include <../part/xc_cam_bracket.scad>
 
 // Hi-def render
 $fn = 60;

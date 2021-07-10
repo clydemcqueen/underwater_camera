@@ -1,6 +1,6 @@
 // Battery-powered camera common settings
 
-include <common.scad>
+include <xc_common.scad>
 
 include <../vitamin/adafruit.scad>
 include <../vitamin/blue_robotics.scad>
