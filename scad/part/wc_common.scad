@@ -32,7 +32,7 @@ support4_rotation = [support4_angle, 90, 180];
 function support_y_offset(angle) = - sign(sin(angle)) * 1.5;
 function support_dir(angle) = - sign(tan(angle));
 
-// Second structure bracket is also built upside down
+// Second bracket is also built upside down
 wc_bracket2_placement = [0, 0, flange_h + support_h + 3 * bracket_ring_h];
 wc_bracket2_rotation = [180, 0, 0];
 
@@ -40,16 +40,6 @@ wc_bracket2_rotation = [180, 0, 0];
 support_hole_r = (bracket_r + interior_r) / 2;
 connect_holes = [for (a = [support1_angle, support2_angle, support3_angle, support4_angle])
   [- cos(a) * support_hole_r, - sin(a) * support_hole_r]];
-
-// Place the parts into the structure, starting with the camera
-// The camera has a wide-angle lens, so it sits pretty deep in the flange
-camera_placement = [cam_center_point.x, cam_center_point.y, cam_center_point.z + 6];
-camera_rotation = [0, 0, 0];
-
-// The pi zero is placed so that a short ribbon cable will reach the camera
-pi_adj = 8;
-pi_placement = [17, 0, flange_h + bracket_ring_h + support_h / 2 + pi_adj];
-pi_rotation = [0, 90, 180];
 
 // Proto board is the same size as the pi zero pcb, and sits across from the pi zero
 proto_adj = 8;

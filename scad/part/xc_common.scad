@@ -35,9 +35,18 @@ pen_flange_int_holes = [for (a = [cam_flange_a, cam_flange_a + 90, cam_flange_a 
 cam_flange_placement = [0, 0, 0];
 cam_flange_rotation = [0, 0, 0];
 
+// The camera has a wide-angle lens, so it sits pretty deep in the flange
+camera_placement = [cam_center_point.x, cam_center_point.y, cam_center_point.z + 6];
+camera_rotation = [0, 0, 0];
+
 // Camera bracket is built upside down, so rotate into place
 cam_bracket_placement = [0, 0, flange_h + bracket_ring_h];
 cam_bracket_rotation = [180, 0, 0];
+
+// The pi is placed so that a short ribbon cable will reach the camera
+pi_adj = 8;
+pi_placement = [17, 0, flange_h + bracket_ring_h + support_h / 2 + pi_adj];
+pi_rotation = [0, 90, 180];
 
 // Place penetration flange
 pen_flange_placement = [0, 0, 132];
