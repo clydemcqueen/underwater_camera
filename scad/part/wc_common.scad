@@ -8,29 +8,29 @@ wc_bracket1_rotation = [0, 0, 0];
 
 // There are 4 long supports between the 2 brackets
 support_r = 3.2 - bracket_r;
-support_size = [support_h, 8, 5];
+support_angle = 28;
+support_size = [support_h, 9, 5];
 function support_placement(angle) = [support_r * cos(angle), - support_r * sin(angle),
       flange_h + support_h / 2 + 2 * bracket_ring_h];
 
-support1_angle = 180 - 28;
-support1_y_offset = - 1.5;
+support1_angle = 180 - support_angle;
 support1_placement = support_placement(support1_angle);
 support1_rotation = [support1_angle, 90, 0];
 
-support2_angle = 180 + 28;
-support2_y_offset = 1.5;
+support2_angle = 180 + support_angle;
 support2_placement = support_placement(support2_angle);
 support2_rotation = [support2_angle, 90, 0];
 
-support3_angle = 0 - 28;
-support3_y_offset = 1.5;
+support3_angle = 0 - support_angle;
 support3_placement = support_placement(support3_angle);
 support3_rotation = [support3_angle, 90, 180];
 
-support4_angle = 0 + 28;
-support4_y_offset = - 1.5;
+support4_angle = 0 + support_angle;
 support4_placement = support_placement(support4_angle);
 support4_rotation = [support4_angle, 90, 180];
+
+function support_y_offset(angle) = - sign(sin(angle)) * 1.5;
+function support_dir(angle) = - sign(tan(angle));
 
 // Second structure bracket is also built upside down
 wc_bracket2_placement = [0, 0, flange_h + support_h + 3 * bracket_ring_h];
