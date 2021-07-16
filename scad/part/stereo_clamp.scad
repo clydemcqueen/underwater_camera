@@ -1,3 +1,4 @@
+include <../include/nut_hole.scad>
 include <sc_common.scad>
 
 // Future: move to library
@@ -8,18 +9,6 @@ module wedge_2d(r, a) {
     rotate(a - 90)
       square(r);
   }
-}
-
-// Create a hole for a screw and nut
-// Screw hole and nut hole meet at [0, 0, 0] and run along the z axis
-// Future: move to library
-module nut_hole(length = 10) {
-  linear_extrude(length)
-    circle(clamp_nut_r, $fn = 6);
-
-  translate([0, 0, - length])
-    linear_extrude(length + 0.1)
-      circle(clamp_screw_r);
 }
 
 module clamp_2d() {
@@ -53,7 +42,7 @@ module clamp() {
     // Nut
     translate([screw_x, - 4, 0])
       rotate([90, 0, 0])
-        nut_hole(clamp_tab.y / 2 + 1);
+        nut_hole(clamp_nut_r, clamp_screw_r, clamp_tab.y / 2 + 1);
 
     // Screw
     translate([screw_x * cos(clamp_cut_a), screw_x * sin(clamp_cut_a) + clamp_tab.y / 2, 0])
