@@ -3,14 +3,21 @@ include <../include/pie_slice.scad>
 include <../include/nut_hole.scad>
 include <../vitamin/blue_robotics.scad>
 
-fake_camera_h = tube_h + 2 * flange_ext_h;
+// Camera height includes tube, flanges, port, screws -- everything
+fake_camera_h = 150;
 fake_camera_r = tube_r_outside;
 
+// Mount is taller than the camera so that it can hold the camera in place
+rcm_holder_h = 5;
+rcm_holder_r = tube_r_outside - 6;
+
 // Minimum thickness after knockout
-rcm_thickness = [8, 2.5];
+rcm_thickness = [2.5, 2.5];
 
 // Mount size before camera knockout
-rcm_size = [fake_camera_r + rcm_thickness.x, fake_camera_r + rcm_thickness.y, 120];
+rcm_size = [fake_camera_r + rcm_thickness.x,
+    fake_camera_r + rcm_thickness.y,
+    fake_camera_h + 2 * rcm_holder_h];
 
 // Position of the camera (and knockout) relative to the mount (center=true)
 rcm_cam_pos = [fake_camera_r - rcm_size.x / 2 + rcm_thickness.x,
@@ -58,8 +65,10 @@ module zip_tie_channel() {
 module rear_cam_mount() {
   difference() {
     cube(rcm_size, center = true);
-    translate(rcm_cam_pos)
-      cylinder(r = fake_camera_r, h = fake_camera_h, center = true);
+    translate(rcm_cam_pos) {
+      cylinder(r = fake_camera_r, h = fake_camera_h + 0.1, center = true);
+      cylinder(r = rcm_holder_r, h = rcm_size.z + 0.1, center = true);
+    }
 
     // Zip tie channels
     for (ztc_placement_z = ztc_placement_zs) {
@@ -68,10 +77,10 @@ module rear_cam_mount() {
     }
 
     // Screw holes
-    for (pos_z = [- 25, 25]) {
-      translate([- 10, - 4, pos_z])
+    for (pos_z = [- 27, 27]) {
+      translate([- 11, - 5, pos_z])
         rotate([0, 90, 0])
-          nut_hole(rcm_nut_r, rcm_screw_r, 30);
+          nut_hole(rcm_nut_r, rcm_screw_r, 20);
     }
   }
 }

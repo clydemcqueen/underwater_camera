@@ -9,9 +9,6 @@ rov_inside_w = 319;
 // Side panel fairing inset (distance from rear of ROV to fairing supports)
 fairing_inset = 24;
 
-// Total height of camera: tube, flanges, port cover, etc.
-total_h = tube_h + 2 * flange_ext_h;
-
 // Mount placements (left and right)
 lmount_placement = [fairing_inset - rcm_size.y / 2, rov_inside_w / 2 - rcm_size.x / 2, 100];
 lmount_rotation = [0, 180, 90];
@@ -28,7 +25,7 @@ module rov_assembly() {
 
 // Fake camera to keep things simple
 module fake_camera() {
-  cylinder(r = tube_r_outside, h = total_h, center = true);
+  cylinder(r = tube_r_outside, h = fake_camera_h, center = true);
 }
 
 // Left and right camera and mount
