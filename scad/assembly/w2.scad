@@ -1,14 +1,14 @@
-// Wired camera: full assembly
+// Wired camera v2: full assembly
 
 include <flags.scad>
 include <xc_cam_side.scad>
-include <wc_interior.scad>
+include <w2_interior.scad>
 
-include <../part/wc_common.scad>
+include <../part/w2_common.scad>
 
-module wired_camera_assembly() {
+module w2_assembly() {
   cam_assembly(lens_adapter = false);
-  wired_interior_assembly();
+  w2_interior_assembly();
 
   if (render_flanges)
     color("#5252b4", 0.5)
@@ -24,4 +24,4 @@ module wired_camera_assembly() {
 }
 
 $fn = 60;
-wired_camera_assembly();
+w2_assembly();

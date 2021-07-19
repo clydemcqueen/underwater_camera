@@ -4,7 +4,7 @@ include <pcb.scad>
 show_pi = true;
 show_gpio_header = 1;  // 0 = no headers, 1 = above, -1 = below
 show_extra_header = false;  // 2x2 header for reset switch and RCA composite video
-show_rtc = true;
+show_rtc = false;
 
 // PCB
 pi_x = 65;

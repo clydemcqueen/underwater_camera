@@ -33,7 +33,7 @@ module cam_box_2d() {
 }
 
 // Cam "box" sits inside the flange and supports the camera
-module cam_box() {
+module cam_box(lens_adapter) {
   box_h = 8.8;
   standoff_h = 2.7;
   standoff_wall = 1.3;
@@ -42,18 +42,25 @@ module cam_box() {
   linear_extrude(height = box_h)
     cam_box_2d();
 
+  // Is there a lens adapter, e.g., for the wide angle lens?
+  //
+  // If yes, use just 2 screw holes. Note that standoff_h should allow the cable connector to
+  // touch the box, so the camera should sit squarely.
+  //
+  // If no, use all 4 screw holes.
+  holes = lens_adapter ? [cam_holes[0], cam_holes[1]] : cam_holes;
+
   // Standoffs
-  two_holes = [cam_holes[0], cam_holes[1]];
   translate([cam_center_point.x, cam_center_point.y, box_h])
-    standoffs(two_holes, standoff_h, standoff_wall, cam_hole_r);
+    standoffs(holes, standoff_h, standoff_wall, cam_hole_r);
 }
 
 // Bracket for the camera flange
-module cam_bracket() {
+module cam_bracket(lens_adapter) {
   // Ring attaches to flange and has slots for the trays
   cam_bracket_ring();
 
   // Camera box sits _underneath_ the ring
   translate([0, 0, bracket_ring_h])
-    cam_box();
+    cam_box(lens_adapter);
 }

@@ -7,7 +7,7 @@ include <ec_interior.scad>
 include <../part/ec_common.scad>
 
 module external_camera_assembly() {
-  cam_assembly();
+  cam_assembly(lens_adapter = false);
   interior_assembly();
 
   if (render_flanges)
